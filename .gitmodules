@@ -1,0 +1,27 @@
+[submodule "standards"]
+	path = standards
+	url = https://github.com/TechnologicalPizza/SixLabors.Standards
+[submodule "dependencies/SixLabors.ImageSharp"]
+	path = dependencies/SixLabors.ImageSharp
+	url = https://github.com/TechnologicalPizza/SixLabors.ImageSharp
+[submodule "dependencies/SixLabors.Shapes"]
+	path = dependencies/SixLabors.Shapes
+	url = https://github.com/TechnologicalPizza/SixLabors.Shapes
+[submodule "dependencies/SixLabors.Fonts"]
+	path = dependencies/SixLabors.Fonts
+	url = https://github.com/TechnologicalPizza/SixLabors.Fonts
+[submodule "dependencies/SixLabors.Core"]
+	path = dependencies/SixLabors.Core
+	url = https://github.com/TechnologicalPizza/SixLabors.Core
+[submodule "dependencies/Shapes"]
+	path = dependencies/Shapes
+	url = https://github.com/TechnologicalPizza/SixLabors.Shapes
+[submodule "dependencies/Fonts"]
+	path = dependencies/Fonts
+	url = https://github.com/TechnologicalPizza/SixLabors.Fonts
+[submodule "dependencies/Core"]
+	path = dependencies/Core
+	url = https://github.com/TechnologicalPizza/SixLabors.Core
+[submodule "dependencies/ImageSharp"]
+	path = dependencies/ImageSharp
+	url = https://github.com/TechnologicalPizza/SixLabors.ImageSharp
