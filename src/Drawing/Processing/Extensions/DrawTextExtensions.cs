@@ -24,11 +24,6 @@ namespace SixLabors.ImageSharp.Processing
         /// <returns>
         /// The <see cref="Image{TPixel}" />.
         /// </returns>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/DrawTextExtensions.cs
-        public static IImageProcessingContext<TPixel> DrawText<TPixel>(this IImageProcessingContext<TPixel> source, string text, Font font, TPixel color, PointF location)
-            where TPixel : unmanaged, IPixel<TPixel>
-            => source.DrawText(TextGraphicsOptions.Default, text, font, color, location);
-=======
         public static IImageProcessingContext DrawText(
             this IImageProcessingContext source,
             string text,
@@ -36,7 +31,6 @@ namespace SixLabors.ImageSharp.Processing
             Color color,
             PointF location) =>
             source.DrawText(TextGraphicsOptions.Default, text, font, color, location);
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/Extensions/DrawTextExtensions.cs
 
         /// <summary>
         /// Draws the text onto the the image filled via the brush.
@@ -50,11 +44,6 @@ namespace SixLabors.ImageSharp.Processing
         /// <returns>
         /// The <see cref="Image{TPixel}" />.
         /// </returns>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/DrawTextExtensions.cs
-        public static IImageProcessingContext<TPixel> DrawText<TPixel>(this IImageProcessingContext<TPixel> source, TextGraphicsOptions options, string text, Font font, TPixel color, PointF location)
-            where TPixel : unmanaged, IPixel<TPixel>
-            => source.DrawText(options, text, font, Brushes.Solid(color), null, location);
-=======
         public static IImageProcessingContext DrawText(
             this IImageProcessingContext source,
             TextGraphicsOptions options,
@@ -63,7 +52,6 @@ namespace SixLabors.ImageSharp.Processing
             Color color,
             PointF location) =>
             source.DrawText(options, text, font, Brushes.Solid(color), null, location);
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/Extensions/DrawTextExtensions.cs
 
         /// <summary>
         /// Draws the text onto the the image filled via the brush.
@@ -76,11 +64,6 @@ namespace SixLabors.ImageSharp.Processing
         /// <returns>
         /// The <see cref="Image{TPixel}" />.
         /// </returns>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/DrawTextExtensions.cs
-        public static IImageProcessingContext<TPixel> DrawText<TPixel>(this IImageProcessingContext<TPixel> source, string text, Font font, IBrush<TPixel> brush, PointF location)
-            where TPixel : unmanaged, IPixel<TPixel>
-            => source.DrawText(TextGraphicsOptions.Default, text, font, brush, location);
-=======
         public static IImageProcessingContext DrawText(
             this IImageProcessingContext source,
             string text,
@@ -88,7 +71,6 @@ namespace SixLabors.ImageSharp.Processing
             IBrush brush,
             PointF location) =>
             source.DrawText(TextGraphicsOptions.Default, text, font, brush, location);
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/Extensions/DrawTextExtensions.cs
 
         /// <summary>
         /// Draws the text onto the the image filled via the brush.
@@ -102,11 +84,6 @@ namespace SixLabors.ImageSharp.Processing
         /// <returns>
         /// The <see cref="Image{TPixel}" />.
         /// </returns>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/DrawTextExtensions.cs
-        public static IImageProcessingContext<TPixel> DrawText<TPixel>(this IImageProcessingContext<TPixel> source, TextGraphicsOptions options, string text, Font font, IBrush<TPixel> brush, PointF location)
-            where TPixel : unmanaged, IPixel<TPixel>
-            => source.DrawText(options, text, font, brush, null, location);
-=======
         public static IImageProcessingContext DrawText(
             this IImageProcessingContext source,
             TextGraphicsOptions options,
@@ -115,7 +92,6 @@ namespace SixLabors.ImageSharp.Processing
             IBrush brush,
             PointF location) =>
             source.DrawText(options, text, font, brush, null, location);
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/Extensions/DrawTextExtensions.cs
 
         /// <summary>
         /// Draws the text onto the the image outlined via the pen.
@@ -128,11 +104,6 @@ namespace SixLabors.ImageSharp.Processing
         /// <returns>
         /// The <see cref="Image{TPixel}" />.
         /// </returns>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/DrawTextExtensions.cs
-        public static IImageProcessingContext<TPixel> DrawText<TPixel>(this IImageProcessingContext<TPixel> source, string text, Font font, IPen<TPixel> pen, PointF location)
-            where TPixel : unmanaged, IPixel<TPixel>
-            => source.DrawText(TextGraphicsOptions.Default, text, font, pen, location);
-=======
         public static IImageProcessingContext DrawText(
             this IImageProcessingContext source,
             string text,
@@ -140,7 +111,6 @@ namespace SixLabors.ImageSharp.Processing
             IPen pen,
             PointF location) =>
             source.DrawText(TextGraphicsOptions.Default, text, font, pen, location);
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/Extensions/DrawTextExtensions.cs
 
         /// <summary>
         /// Draws the text onto the the image outlined via the pen.
@@ -154,11 +124,6 @@ namespace SixLabors.ImageSharp.Processing
         /// <returns>
         /// The <see cref="Image{TPixel}" />.
         /// </returns>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/DrawTextExtensions.cs
-        public static IImageProcessingContext<TPixel> DrawText<TPixel>(this IImageProcessingContext<TPixel> source, TextGraphicsOptions options, string text, Font font, IPen<TPixel> pen, PointF location)
-            where TPixel : unmanaged, IPixel<TPixel>
-            => source.DrawText(options, text, font, null, pen, location);
-=======
         public static IImageProcessingContext DrawText(
             this IImageProcessingContext source,
             TextGraphicsOptions options,
@@ -167,7 +132,6 @@ namespace SixLabors.ImageSharp.Processing
             IPen pen,
             PointF location) =>
             source.DrawText(options, text, font, null, pen, location);
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/Extensions/DrawTextExtensions.cs
 
         /// <summary>
         /// Draws the text onto the the image filled via the brush then outlined via the pen.
@@ -181,11 +145,6 @@ namespace SixLabors.ImageSharp.Processing
         /// <returns>
         /// The <see cref="Image{TPixel}" />.
         /// </returns>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/DrawTextExtensions.cs
-        public static IImageProcessingContext<TPixel> DrawText<TPixel>(this IImageProcessingContext<TPixel> source, string text, Font font, IBrush<TPixel> brush, IPen<TPixel> pen, PointF location)
-            where TPixel : unmanaged, IPixel<TPixel>
-            => source.DrawText(TextGraphicsOptions.Default, text, font, brush, pen, location);
-=======
         public static IImageProcessingContext DrawText(
             this IImageProcessingContext source,
             string text,
@@ -194,7 +153,6 @@ namespace SixLabors.ImageSharp.Processing
             IPen pen,
             PointF location) =>
             source.DrawText(TextGraphicsOptions.Default, text, font, brush, pen, location);
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/Extensions/DrawTextExtensions.cs
 
         /// <summary>
         /// Draws the text using the default resolution of <value>72dpi</value> onto the the image filled via the brush then outlined via the pen.
@@ -209,11 +167,6 @@ namespace SixLabors.ImageSharp.Processing
         /// <returns>
         /// The <see cref="Image{TPixel}" />.
         /// </returns>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/DrawTextExtensions.cs
-        public static IImageProcessingContext<TPixel> DrawText<TPixel>(this IImageProcessingContext<TPixel> source, TextGraphicsOptions options, string text, Font font, IBrush<TPixel> brush, IPen<TPixel> pen, PointF location)
-           where TPixel : unmanaged, IPixel<TPixel>
-            => source.ApplyProcessor(new DrawTextProcessor<TPixel>(options, text, font, brush, pen, location));
-=======
         public static IImageProcessingContext DrawText(
             this IImageProcessingContext source,
             TextGraphicsOptions options,
@@ -223,6 +176,5 @@ namespace SixLabors.ImageSharp.Processing
             IPen pen,
             PointF location) =>
             source.ApplyProcessor(new DrawTextProcessor(options, text, font, brush, pen, location));
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/Extensions/DrawTextExtensions.cs
     }
 }

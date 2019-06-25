@@ -3,20 +3,13 @@
 
 using System.Diagnostics;
 
-using SixLabors.ImageSharp.PixelFormats;
-
 namespace SixLabors.ImageSharp.Processing
 {
     /// <summary>
     /// A struct that defines a single color stop.
     /// </summary>
     [DebuggerDisplay("ColorStop({Ratio} -> {Color}")]
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/ColorStop{TPixel}.cs
-    public struct ColorStop<TPixel>
-        where TPixel : unmanaged, IPixel<TPixel>
-=======
     public readonly struct ColorStop
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/ColorStop.cs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorStop" /> struct.

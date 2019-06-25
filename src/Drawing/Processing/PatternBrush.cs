@@ -34,13 +34,7 @@ namespace SixLabors.ImageSharp.Processing
     ///  0
     /// </para>
     /// </remarks>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/PatternBrush{TPixel}.cs
-    /// <typeparam name="TPixel">The pixel format.</typeparam>
-    public class PatternBrush<TPixel> : IBrush<TPixel>
-        where TPixel : unmanaged, IPixel<TPixel>
-=======
     public class PatternBrush : IBrush
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/PatternBrush.cs
     {
         /// <summary>
         /// The pattern.
@@ -101,7 +95,7 @@ namespace SixLabors.ImageSharp.Processing
             ImageFrame<TPixel> source,
             RectangleF region,
             GraphicsOptions options)
-            where TPixel : struct, IPixel<TPixel> =>
+            where TPixel : unmanaged, IPixel<TPixel> =>
             new PatternBrushApplicator<TPixel>(
                 source,
                 this.pattern.ToPixelMatrix<TPixel>(source.Configuration),
@@ -112,7 +106,7 @@ namespace SixLabors.ImageSharp.Processing
         /// The pattern brush applicator.
         /// </summary>
         private class PatternBrushApplicator<TPixel> : BrushApplicator<TPixel>
-            where TPixel : struct, IPixel<TPixel>
+            where TPixel : unmanaged, IPixel<TPixel>
         {
             /// <summary>
             /// The pattern.
@@ -127,7 +121,8 @@ namespace SixLabors.ImageSharp.Processing
             /// <param name="pattern">The pattern.</param>
             /// <param name="patternVector">The patternVector.</param>
             /// <param name="options">The options</param>
-            public PatternBrushApplicator(ImageFrame<TPixel> source, in DenseMatrix<TPixel> pattern, DenseMatrix<Vector4> patternVector, GraphicsOptions options)
+            public PatternBrushApplicator(
+                ImageFrame<TPixel> source, in DenseMatrix<TPixel> pattern, DenseMatrix<Vector4> patternVector, GraphicsOptions options)
                 : base(source, options)
             {
                 this.pattern = pattern;
@@ -169,8 +164,8 @@ namespace SixLabors.ImageSharp.Processing
                 using (IMemoryOwner<float> amountBuffer = memoryAllocator.Allocate<float>(scanline.Length))
                 using (IMemoryOwner<TPixel> overlay = memoryAllocator.Allocate<TPixel>(scanline.Length))
                 {
-                    Span<float> amountSpan = amountBuffer.AsSpan();
-                    Span<TPixel> overlaySpan = overlay.AsSpan();
+                    Span<float> amountSpan = amountBuffer.GetSpan();
+                    Span<TPixel> overlaySpan = overlay.GetSpan();
 
                     for (int i = 0; i < scanline.Length; i++)
                     {

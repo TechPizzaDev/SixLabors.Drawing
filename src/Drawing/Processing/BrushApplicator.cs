@@ -15,7 +15,7 @@ namespace SixLabors.ImageSharp.Processing
     /// Primitive that converts a point in to a color for discovering the fill color based on an implementation
     /// </summary>
     /// <typeparam name="TPixel">The pixel format.</typeparam>
-    /// <seealso cref="System.IDisposable" />
+    /// <seealso cref="IDisposable" />
     public abstract class BrushApplicator<TPixel> : IDisposable // disposable will be required if/when there is an ImageBrush
         where TPixel : unmanaged, IPixel<TPixel>
     {
@@ -70,8 +70,8 @@ namespace SixLabors.ImageSharp.Processing
             using (IMemoryOwner<float> amountBuffer = memoryAllocator.Allocate<float>(scanline.Length))
             using (IMemoryOwner<TPixel> overlay = memoryAllocator.Allocate<TPixel>(scanline.Length))
             {
-                Span<float> amountSpan = amountBuffer.AsSpan();
-                Span<TPixel> overlaySpan = overlay.AsSpan();
+                Span<float> amountSpan = amountBuffer.GetSpan();
+                Span<TPixel> overlaySpan = overlay.GetSpan();
 
                 for (int i = 0; i < scanline.Length; i++)
                 {

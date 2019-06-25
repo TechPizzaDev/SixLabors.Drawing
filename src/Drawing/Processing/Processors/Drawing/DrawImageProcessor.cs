@@ -14,15 +14,7 @@ namespace SixLabors.ImageSharp.Processing.Processors.Drawing
     /// <summary>
     /// Combines two images together by blending the pixels.
     /// </summary>
-<<<<<<< HEAD
-    /// <typeparam name="TPixelDst">The pixel format of destination image.</typeparam>
-    /// <typeparam name="TPixelSrc">The pixel format of source image.</typeparam>
-    internal class DrawImageProcessor<TPixelDst, TPixelSrc> : ImageProcessor<TPixelDst>
-        where TPixelDst : unmanaged, IPixel<TPixelDst>
-        where TPixelSrc : unmanaged, IPixel<TPixelSrc>
-=======
     public class DrawImageProcessor : IImageProcessor
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DrawImageProcessor"/> class.
@@ -73,7 +65,7 @@ namespace SixLabors.ImageSharp.Processing.Processors.Drawing
 
         /// <inheritdoc />
         public IImageProcessor<TPixelBg> CreatePixelSpecificProcessor<TPixelBg>()
-            where TPixelBg : struct, IPixel<TPixelBg>
+            where TPixelBg : unmanaged, IPixel<TPixelBg>
         {
             var visitor = new ProcessorFactoryVisitor<TPixelBg>(this);
             this.Image.AcceptVisitor(visitor);
@@ -81,7 +73,7 @@ namespace SixLabors.ImageSharp.Processing.Processors.Drawing
         }
 
         private class ProcessorFactoryVisitor<TPixelBg> : IImageVisitor
-            where TPixelBg : struct, IPixel<TPixelBg>
+            where TPixelBg : unmanaged, IPixel<TPixelBg>
         {
             private readonly DrawImageProcessor definition;
 
@@ -93,7 +85,7 @@ namespace SixLabors.ImageSharp.Processing.Processors.Drawing
             public IImageProcessor<TPixelBg> Result { get; private set; }
 
             public void Visit<TPixelFg>(Image<TPixelFg> image)
-                where TPixelFg : struct, IPixel<TPixelFg>
+                where TPixelFg : unmanaged, IPixel<TPixelFg>
             {
                 this.Result = new DrawImageProcessor<TPixelBg, TPixelFg>(
                     image,

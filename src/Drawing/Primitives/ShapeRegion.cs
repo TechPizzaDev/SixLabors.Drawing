@@ -60,7 +60,7 @@ namespace SixLabors.ImageSharp.Primitives
             {
                 using (IMemoryOwner<PointF> tempBuffer = configuration.MemoryAllocator.Allocate<PointF>(buffer.Length))
                 {
-                    Span<PointF> innerBuffer = tempBuffer.AsSpan();
+                    Span<PointF> innerBuffer = tempBuffer.GetSpan();
                     return this.Scan(start, end, buffer, innerBuffer);
                 }
             }

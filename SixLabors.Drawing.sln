@@ -5,15 +5,15 @@ VisualStudioVersion = 16.0.28902.138
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{815C0625-CD3D-440F-9F80-2D83856AB7AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixLabors.Drawing", "src\Drawing\SixLabors.Drawing.csproj", "{348B02CB-6475-4BCF-91DF-91106C9C0354}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixLabors.ImageSharp.Drawing", "src\Drawing\SixLabors.ImageSharp.Drawing.csproj", "{348B02CB-6475-4BCF-91DF-91106C9C0354}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixLabors.Fonts", "thirdparty\SixLabors.Fonts\src\SixLabors.Fonts\SixLabors.Fonts.csproj", "{A250A4AB-2C0D-43B9-9EB2-F0659F5B6838}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixLabors.Fonts", "dependencies\Fonts\src\SixLabors.Fonts\SixLabors.Fonts.csproj", "{A250A4AB-2C0D-43B9-9EB2-F0659F5B6838}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixLabors.ImageSharp", "thirdparty\SixLabors.ImageSharp\src\ImageSharp\SixLabors.ImageSharp.csproj", "{DBD2DB5C-075D-485B-98DD-3D368326E8B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixLabors.ImageSharp", "dependencies\ImageSharp\src\ImageSharp\SixLabors.ImageSharp.csproj", "{DBD2DB5C-075D-485B-98DD-3D368326E8B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixLabors.Shapes", "thirdparty\SixLabors.Shapes\src\SixLabors.Shapes\SixLabors.Shapes.csproj", "{22F36829-51EF-4748-8CD3-951A98BF16F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixLabors.Shapes", "dependencies\Shapes\src\SixLabors.Shapes\SixLabors.Shapes.csproj", "{22F36829-51EF-4748-8CD3-951A98BF16F4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixLabors.Core", "thirdparty\SixLabors.Core\src\SixLabors.Core\SixLabors.Core.csproj", "{188E9DAD-B79A-465A-8C2E-60257FCEA901}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixLabors.Core", "dependencies\Core\src\SixLabors.Core\SixLabors.Core.csproj", "{188E9DAD-B79A-465A-8C2E-60257FCEA901}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

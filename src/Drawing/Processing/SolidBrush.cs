@@ -7,6 +7,7 @@ using System.Buffers;
 using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.Memory;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.Memory;
 using SixLabors.Primitives;
 
 namespace SixLabors.ImageSharp.Processing
@@ -14,25 +15,12 @@ namespace SixLabors.ImageSharp.Processing
     /// <summary>
     /// Provides an implementation of a solid brush for painting solid color areas.
     /// </summary>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/SolidBrush{TPixel}.cs
-    /// <typeparam name="TPixel">The pixel format.</typeparam>
-    public class SolidBrush<TPixel> : IBrush<TPixel>
-        where TPixel : unmanaged, IPixel<TPixel>
-=======
     public class SolidBrush : IBrush
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/SolidBrush.cs
     {
         /// <summary>
-        /// Gets the color.
+        /// The color to paint.
         /// </summary>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/SolidBrush{TPixel}.cs
-        /// <value>
-        /// The color.
-        /// </value>
-        public TPixel Color { get; }
-=======
         private readonly Color color;
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/SolidBrush.cs
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SolidBrush"/> class.
@@ -40,11 +28,9 @@ namespace SixLabors.ImageSharp.Processing
         /// <param name="color">The color.</param>
         public SolidBrush(Color color)
         {
-            this.Color = color;
+            this.color = color;
         }
 
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/SolidBrush{TPixel}.cs
-=======
         /// <summary>
         /// Gets the color.
         /// </summary>
@@ -53,23 +39,19 @@ namespace SixLabors.ImageSharp.Processing
         /// </value>
         public Color Color => this.color;
 
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/SolidBrush.cs
         /// <inheritdoc />
-        public BrushApplicator<TPixel> CreateApplicator<TPixel>(ImageFrame<TPixel> source, RectangleF region, GraphicsOptions options)
-            where TPixel : struct, IPixel<TPixel>
+        public BrushApplicator<TPixel> CreateApplicator<TPixel>(
+            ImageFrame<TPixel> source, RectangleF region, GraphicsOptions options)
+            where TPixel : unmanaged, IPixel<TPixel>
         {
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/SolidBrush{TPixel}.cs
-            return new SolidBrushApplicator(source, this.Color, options);
-=======
             return new SolidBrushApplicator<TPixel>(source, this.color.ToPixel<TPixel>(), options);
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/SolidBrush.cs
         }
 
         /// <summary>
         /// The solid brush applicator.
         /// </summary>
         private class SolidBrushApplicator<TPixel> : BrushApplicator<TPixel>
-            where TPixel : struct, IPixel<TPixel>
+            where TPixel : unmanaged, IPixel<TPixel>
         {
             private const int MaxColorBufferWidth = 2048;
             private const int MaxScanlineWidth = 2048;
@@ -83,8 +65,8 @@ namespace SixLabors.ImageSharp.Processing
             /// <param name="source">The source image.</param>
             /// <param name="color">The color.</param>
             /// <param name="options">The options</param>
-            public SolidBrushApplicator(ImageFrame<TPixel> source, TPixel color, GraphicsOptions options) :
-                base(source, options)
+            public SolidBrushApplicator(ImageFrame<TPixel> source, TPixel color, GraphicsOptions options)
+                : base(source, options)
             {
                 this._color = color;
                 this._width = source.Width;
@@ -92,7 +74,7 @@ namespace SixLabors.ImageSharp.Processing
                 if (source.Width >= MaxColorBufferWidth)
                 {
                     this.Colors = source.MemoryAllocator.Allocate<TPixel>(this._width);
-                    this.Colors.AsSpan().Fill(this._color);
+                    this.Colors.GetSpan().Fill(this._color);
                 }
             }
 
@@ -109,12 +91,12 @@ namespace SixLabors.ImageSharp.Processing
             /// <returns>
             /// The color
             /// </returns>
-            internal override TPixel this[int x, int y] => this._color;
+            internal override TPixel this[int x, int y] => this.Colors.GetSpan()[x];
 
             /// <inheritdoc />
             public override void Dispose()
             {
-                this.Colors?.Dispose();
+                this.Colors.Dispose();
             }
 
             /// <inheritdoc />
@@ -124,19 +106,23 @@ namespace SixLabors.ImageSharp.Processing
 
                 // constrain the spans to each other
                 if (destinationRow.Length > scanline.Length)
+                {
                     destinationRow = destinationRow.Slice(0, scanline.Length);
+                }
                 else
+                {
                     scanline = scanline.Slice(0, destinationRow.Length);
+                }
+
+                MemoryAllocator memoryAllocator = this.Target.MemoryAllocator;
+                Configuration configuration = this.Target.Configuration;
 
                 Span<TPixel> colorBuffer = stackalloc TPixel[this._width < MaxColorBufferWidth ? this._width : 0];
                 colorBuffer.Fill(this._color);
 
                 if (this.Options.BlendPercentage == 1f)
                 {
-                    if (this._width >= MaxColorBufferWidth)
-                        this.Blender.Blend(this.Target.Configuration, destinationRow, destinationRow, this.Colors.AsSpan(), scanline);
-                    else
-                        this.Blender.Blend(this.Target.Configuration, destinationRow, destinationRow, colorBuffer, scanline);
+                    this.Blender.Blend(configuration, destinationRow, destinationRow, this.Colors.GetSpan(), scanline);
                 }
                 else
                 {
@@ -149,7 +135,7 @@ namespace SixLabors.ImageSharp.Processing
                         if (this._width >= MaxColorBufferWidth)
                         {
                             this.Blender.Blend(
-                                this.Target.Configuration, dstRow, dstRow, this.Colors.AsSpan(), amount);
+                                this.Target.Configuration, dstRow, dstRow, this.Colors.GetSpan(), amount);
                         }
                         else
                         {
@@ -160,9 +146,9 @@ namespace SixLabors.ImageSharp.Processing
 
                     if (scanline.Length >= MaxScanlineWidth)
                     {
-                        using (IMemoryOwner<float> amountBuffer = this.Target.MemoryAllocator.Allocate<float>(scanline.Length))
+                        using (IMemoryOwner<float> amountBuffer = memoryAllocator.Allocate<float>(scanline.Length))
                         {
-                            Span<float> amountSpan = amountBuffer.AsSpan();
+                            Span<float> amountSpan = amountBuffer.GetSpan();
                             Body(amountSpan, scanline, destinationRow, colorBuffer);
                         }
                     }
@@ -170,6 +156,23 @@ namespace SixLabors.ImageSharp.Processing
                     {
                         Span<float> amountBuffer = stackalloc float[scanline.Length];
                         Body(amountBuffer, scanline, destinationRow, colorBuffer);
+                    }
+
+                    using (IMemoryOwner<float> amountBuffer = memoryAllocator.Allocate<float>(scanline.Length))
+                    {
+                        Span<float> amountSpan = amountBuffer.GetSpan();
+
+                        for (int i = 0; i < scanline.Length; i++)
+                        {
+                            amountSpan[i] = scanline[i] * this.Options.BlendPercentage;
+                        }
+
+                        this.Blender.Blend(
+                            configuration,
+                            destinationRow,
+                            destinationRow,
+                            this.Colors.GetSpan(),
+                            amountSpan);
                     }
                 }
             }

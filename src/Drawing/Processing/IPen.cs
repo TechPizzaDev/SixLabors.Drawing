@@ -10,13 +10,7 @@ namespace SixLabors.ImageSharp.Processing
     /// <summary>
     /// Interface representing the pattern and size of the stroke to apply with a Pen.
     /// </summary>
-<<<<<<< HEAD
-    /// <typeparam name="TPixel">The type of the color.</typeparam>
-    public interface IPen<TPixel> : IPen
-            where TPixel : unmanaged, IPixel<TPixel>
-=======
     public interface IPen
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7
     {
         /// <summary>
         /// Gets the stroke fill.

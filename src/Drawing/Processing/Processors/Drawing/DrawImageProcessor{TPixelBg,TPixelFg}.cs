@@ -16,8 +16,8 @@ namespace SixLabors.ImageSharp.Processing.Processors.Drawing
     /// <typeparam name="TPixelBg">The pixel format of destination image.</typeparam>
     /// <typeparam name="TPixelFg">The pixel format of source image.</typeparam>
     internal class DrawImageProcessor<TPixelBg, TPixelFg> : ImageProcessor<TPixelBg>
-        where TPixelBg : struct, IPixel<TPixelBg>
-        where TPixelFg : struct, IPixel<TPixelFg>
+        where TPixelBg : unmanaged, IPixel<TPixelBg>
+        where TPixelFg : unmanaged, IPixel<TPixelFg>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DrawImageProcessor{TPixelDst, TPixelSrc}"/> class.
@@ -97,15 +97,15 @@ namespace SixLabors.ImageSharp.Processing.Processors.Drawing
                 workingRect,
                 configuration,
                 rows =>
+                {
+                    for (int y = rows.Min; y < rows.Max; y++)
                     {
-                        for (int y = rows.Min; y < rows.Max; y++)
-                        {
-                            Span<TPixelBg> background = source.GetPixelRowSpan(y).Slice(minX, width);
-                            Span<TPixelFg> foreground =
-                                targetImage.GetPixelRowSpan(y - locationY).Slice(targetX, width);
-                            blender.Blend<TPixelFg>(configuration, background, background, foreground, this.Opacity);
-                        }
-                    });
+                        Span<TPixelBg> background = source.GetPixelRowSpan(y).Slice(minX, width);
+                        Span<TPixelFg> foreground =
+                            targetImage.GetPixelRowSpan(y - locationY).Slice(targetX, width);
+                        blender.Blend<TPixelFg>(configuration, background, background, foreground, this.Opacity);
+                    }
+                });
         }
     }
 }

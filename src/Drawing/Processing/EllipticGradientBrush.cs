@@ -14,13 +14,7 @@ namespace SixLabors.ImageSharp.Processing
     /// a point on the longest extension of the ellipse and
     /// the ratio between longest and shortest extension.
     /// </summary>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/EllipticGradientBrush{TPixel}.cs
-    /// <typeparam name="TPixel">The Pixel format that is used.</typeparam>
-    public sealed class EllipticGradientBrush<TPixel> : GradientBrushBase<TPixel>
-        where TPixel : unmanaged, IPixel<TPixel>
-=======
     public sealed class EllipticGradientBrush : GradientBrush
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/EllipticGradientBrush.cs
     {
         private readonly PointF center;
 
@@ -67,26 +61,17 @@ namespace SixLabors.ImageSharp.Processing
 
         /// <inheritdoc />
         private sealed class RadialGradientBrushApplicator<TPixel> : GradientBrushApplicator<TPixel>
-            where TPixel : struct, IPixel<TPixel>
+            where TPixel : unmanaged, IPixel<TPixel>
         {
             private readonly PointF center;
-
             private readonly PointF referenceAxisEnd;
-
             private readonly float axisRatio;
-
             private readonly double rotation;
-
             private readonly float referenceRadius;
-
             private readonly float secondRadius;
-
             private readonly float cosRotation;
-
             private readonly float sinRotation;
-
             private readonly float secondRadiusSquared;
-
             private readonly float referenceRadiusSquared;
 
             /// <summary>

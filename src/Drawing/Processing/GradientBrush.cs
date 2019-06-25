@@ -13,13 +13,7 @@ namespace SixLabors.ImageSharp.Processing
     /// <summary>
     /// Base class for Gradient brushes
     /// </summary>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/GradientBrushBase{TPixel}.cs
-    /// <typeparam name="TPixel">The pixel format</typeparam>
-    public abstract class GradientBrushBase<TPixel> : IBrush<TPixel>
-        where TPixel : unmanaged, IPixel<TPixel>
-=======
     public abstract class GradientBrush : IBrush
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/GradientBrush.cs
     {
         /// <inheritdoc cref="IBrush"/>
         /// <param name="repetitionMode">Defines how the colors are repeated beyond the interval [0..1]</param>
@@ -47,13 +41,13 @@ namespace SixLabors.ImageSharp.Processing
             ImageFrame<TPixel> source,
             RectangleF region,
             GraphicsOptions options)
-            where TPixel : struct, IPixel<TPixel>;
+            where TPixel : unmanaged, IPixel<TPixel>;
 
         /// <summary>
         /// Base class for gradient brush applicators
         /// </summary>
         internal abstract class GradientBrushApplicator<TPixel> : BrushApplicator<TPixel>
-            where TPixel : struct, IPixel<TPixel>
+            where TPixel : unmanaged, IPixel<TPixel>
         {
             private static readonly TPixel Transparent = Color.Transparent.ToPixel<TPixel>();
 
@@ -97,24 +91,22 @@ namespace SixLabors.ImageSharp.Processing
                             // do nothing. The following could be done, but is not necessary:
                             // onLocalGradient = Math.Min(0, Math.Max(1, onLocalGradient));
                             break;
+
                         case GradientRepetitionMode.Repeat:
                             positionOnCompleteGradient %= 1;
                             break;
+
                         case GradientRepetitionMode.Reflect:
                             positionOnCompleteGradient %= 2;
                             if (positionOnCompleteGradient > 1)
-                            {
                                 positionOnCompleteGradient = 2 - positionOnCompleteGradient;
-                            }
-
                             break;
+
                         case GradientRepetitionMode.DontFill:
                             if (positionOnCompleteGradient > 1 || positionOnCompleteGradient < 0)
-                            {
                                 return Transparent;
-                            }
-
                             break;
+
                         default:
                             throw new ArgumentOutOfRangeException();
                     }

@@ -17,12 +17,7 @@ namespace SixLabors.ImageSharp.Processing
     /// section 3 will be width/2 long and will be filled
     /// the the pattern will immediately repeat without gap.
     /// </remarks>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/Pen{TPixel}.cs
-    public class Pen<TPixel> : IPen<TPixel>
-        where TPixel : unmanaged, IPixel<TPixel>
-=======
     public class Pen : IPen
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/Pen.cs
     {
         private readonly float[] pattern;
 

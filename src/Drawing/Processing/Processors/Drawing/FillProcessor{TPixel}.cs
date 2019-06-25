@@ -17,7 +17,7 @@ namespace SixLabors.ImageSharp.Processing.Processors.Drawing
     /// </summary>
     /// <typeparam name="TPixel">The pixel format.</typeparam>
     internal class FillProcessor<TPixel> : ImageProcessor<TPixel>
-        where TPixel : struct, IPixel<TPixel>
+        where TPixel : unmanaged, IPixel<TPixel>
     {
         private readonly FillProcessor definition;
 
@@ -58,12 +58,12 @@ namespace SixLabors.ImageSharp.Processing.Processors.Drawing
                     workingRect,
                     parallelSettings,
                     rows =>
+                    {
+                        for (int y = rows.Min; y < rows.Max; y++)
                         {
-                            for (int y = rows.Min; y < rows.Max; y++)
-                            {
-                                source.GetPixelRowSpan(y).Slice(minX, width).Fill(colorPixel);
-                            }
-                        });
+                            source.GetPixelRowSpan(y).Slice(minX, width).Fill(colorPixel);
+                        }
+                    });
             }
             else
             {
@@ -90,15 +90,15 @@ namespace SixLabors.ImageSharp.Processing.Processors.Drawing
                         workingRect,
                         configuration,
                         rows =>
+                        {
+                            for (int y = rows.Min; y < rows.Max; y++)
                             {
-                                for (int y = rows.Min; y < rows.Max; y++)
-                                {
-                                    int offsetY = y - startY;
-                                    int offsetX = minX - startX;
+                                int offsetY = y - startY;
+                                int offsetX = minX - startX;
 
-                                    applicator.Apply(amount.GetSpan(), offsetX, offsetY);
-                                }
-                            });
+                                applicator.Apply(amount.GetSpan(), offsetX, offsetY);
+                            }
+                        });
                 }
             }
         }

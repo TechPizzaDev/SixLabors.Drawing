@@ -19,7 +19,7 @@ namespace SixLabors.ImageSharp.Processing.Processors.Drawing
     /// <typeparam name="TPixel">The type of the color.</typeparam>
     /// <seealso cref="ImageProcessor{TPixel}" />
     internal class FillRegionProcessor<TPixel> : ImageProcessor<TPixel>
-        where TPixel : struct, IPixel<TPixel>
+        where TPixel : unmanaged, IPixel<TPixel>
     {
         private readonly FillRegionProcessor definition;
 
@@ -59,10 +59,10 @@ namespace SixLabors.ImageSharp.Processing.Processors.Drawing
             // and this can cause missed fills when not using antialiasing.so we offset the pixel grid by 0.5 in the x & y direction thus causing the#
             // region to align with the pixel grid.
             float offset = 0.5f;
-            if (options.Antialias)
+            if (options.AntiAlias)
             {
                 offset = 0f; // we are antialiasing skip offsetting as real antialiasing should take care of offset.
-                subpixelCount = options.AntialiasSubpixelDepth;
+                subpixelCount = options.AntiAliasSubpixelDepth;
                 if (subpixelCount < 4)
                 {
                     subpixelCount = 4;
@@ -144,7 +144,7 @@ namespace SixLabors.ImageSharp.Processing.Processors.Drawing
 
                         if (scanlineDirty)
                         {
-                            if (!options.Antialias)
+                            if (!options.AntiAlias)
                             {
                                 bool hasOnes = false;
                                 bool hasZeros = false;
@@ -185,9 +185,7 @@ namespace SixLabors.ImageSharp.Processing.Processors.Drawing
             solidBrush = this.definition.Brush as SolidBrush;
 
             if (solidBrush == null)
-            {
                 return false;
-            }
 
             return this.definition.Options.IsOpaqueColorWithoutBlending(solidBrush.Color);
         }

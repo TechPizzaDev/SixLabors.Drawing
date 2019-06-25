@@ -15,13 +15,7 @@ namespace SixLabors.ImageSharp.Processing
     /// <summary>
     /// Provides an implementation of a brush that can recolor an image
     /// </summary>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/RecolorBrush{TPixel}.cs
-    /// <typeparam name="TPixel">The pixel format.</typeparam>
-    public class RecolorBrush<TPixel> : IBrush<TPixel>
-        where TPixel : unmanaged, IPixel<TPixel>
-=======
     public class RecolorBrush : IBrush
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/RecolorBrush.cs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RecolorBrush" /> class.
@@ -59,7 +53,7 @@ namespace SixLabors.ImageSharp.Processing
             ImageFrame<TPixel> source,
             RectangleF region,
             GraphicsOptions options)
-            where TPixel : struct, IPixel<TPixel>
+            where TPixel : unmanaged, IPixel<TPixel>
         {
             return new RecolorBrushApplicator<TPixel>(
                 source,
@@ -73,7 +67,7 @@ namespace SixLabors.ImageSharp.Processing
         /// The recolor brush applicator.
         /// </summary>
         private class RecolorBrushApplicator<TPixel> : BrushApplicator<TPixel>
-            where TPixel : struct, IPixel<TPixel>
+            where TPixel : unmanaged, IPixel<TPixel>
         {
             /// <summary>
             /// The source color.
@@ -81,15 +75,13 @@ namespace SixLabors.ImageSharp.Processing
             private readonly Vector4 sourceColor;
 
             /// <summary>
-            /// The target color.
-            /// </summary>
-            private readonly Vector4 targetColor;
-
-            /// <summary>
             /// The threshold.
             /// </summary>
             private readonly float threshold;
 
+            /// <summary>
+            /// The target color.
+            /// </summary>
             private readonly TPixel targetColorPixel;
 
             /// <summary>
@@ -104,7 +96,6 @@ namespace SixLabors.ImageSharp.Processing
                 : base(source, options)
             {
                 this.sourceColor = sourceColor.ToVector4();
-                this.targetColor = targetColor.ToVector4();
                 this.targetColorPixel = targetColor;
 
                 // Lets hack a min max extremes for a color space by letting the IPackedPixel clamp our values to something in the correct spaces :)
@@ -157,8 +148,8 @@ namespace SixLabors.ImageSharp.Processing
                 using (IMemoryOwner<float> amountBuffer = memoryAllocator.Allocate<float>(scanline.Length))
                 using (IMemoryOwner<TPixel> overlay = memoryAllocator.Allocate<TPixel>(scanline.Length))
                 {
-                    Span<float> amountSpan = amountBuffer.AsSpan();
-                    Span<TPixel> overlaySpan = overlay.AsSpan();
+                    Span<float> amountSpan = amountBuffer.GetSpan();
+                    Span<TPixel> overlaySpan = overlay.GetSpan();
 
                     for (int i = 0; i < scanline.Length; i++)
                     {

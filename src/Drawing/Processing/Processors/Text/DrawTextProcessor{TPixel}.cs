@@ -21,28 +21,22 @@ namespace SixLabors.ImageSharp.Processing.Processors.Text
     /// </summary>
     /// <typeparam name="TPixel">The pixel format.</typeparam>
     internal class DrawTextProcessor<TPixel> : ImageProcessor<TPixel>
-        where TPixel : struct, IPixel<TPixel>
+        where TPixel : unmanaged, IPixel<TPixel>
     {
         private CachingGlyphRenderer textRenderer;
-
         private readonly DrawTextProcessor definition;
+
+        private TextGraphicsOptions Options => this.definition.Options;
+        private Font Font => this.definition.Font;
+        private PointF Location => this.definition.Location;
+        private string Text => this.definition.Text;
+        private IPen Pen => this.definition.Pen;
+        private IBrush Brush => this.definition.Brush;
 
         public DrawTextProcessor(DrawTextProcessor definition)
         {
             this.definition = definition;
         }
-
-        private TextGraphicsOptions Options => this.definition.Options;
-
-        private Font Font => this.definition.Font;
-
-        private PointF Location => this.definition.Location;
-
-        private string Text => this.definition.Text;
-
-        private IPen Pen => this.definition.Pen;
-
-        private IBrush Brush => this.definition.Brush;
 
         protected override void BeforeImageApply(Image<TPixel> source, Rectangle sourceRectangle)
         {
@@ -50,18 +44,18 @@ namespace SixLabors.ImageSharp.Processing.Processors.Text
 
             // do everything at the image level as we are delegating the processing down to other processors
             var style = new RendererOptions(this.Font, this.Options.DpiX, this.Options.DpiY, this.Location)
-                            {
-                                ApplyKerning = this.Options.ApplyKerning,
-                                TabWidth = this.Options.TabWidth,
-                                WrappingWidth = this.Options.WrapTextWidth,
-                                HorizontalAlignment = this.Options.HorizontalAlignment,
-                                VerticalAlignment = this.Options.VerticalAlignment
-                            };
+            {
+                ApplyKerning = this.Options.ApplyKerning,
+                TabWidth = this.Options.TabWidth,
+                WrappingWidth = this.Options.WrapTextWidth,
+                HorizontalAlignment = this.Options.HorizontalAlignment,
+                VerticalAlignment = this.Options.VerticalAlignment
+            };
 
             this.textRenderer = new CachingGlyphRenderer(source.GetMemoryAllocator(), this.Text.Length, this.Pen, this.Brush != null);
             this.textRenderer.Options = (GraphicsOptions)this.Options;
-            var renderer = new TextRenderer(this.textRenderer);
-            renderer.RenderText(this.Text, style);
+
+            TextRenderer.RenderText(this.textRenderer, this.Text.AsSpan(), style);
         }
 
         protected override void AfterImageApply(Image<TPixel> source, Rectangle sourceRectangle)
@@ -120,7 +114,6 @@ namespace SixLabors.ImageSharp.Processing.Processors.Text
         private struct DrawingOperation
         {
             public Buffer2D<float> Map { get; set; }
-
             public Point Location { get; set; }
         }
 
@@ -278,19 +271,19 @@ namespace SixLabors.ImageSharp.Processing.Processors.Text
                 if (this.renderFill)
                 {
                     this.FillOperations.Add(new DrawingOperation
-                                                {
-                                                    Location = this.currentRenderPosition,
-                                                    Map = renderData.FillMap
-                                                });
+                    {
+                        Location = this.currentRenderPosition,
+                        Map = renderData.FillMap
+                    });
                 }
 
                 if (this.renderOutline)
                 {
                     this.OutlineOperations.Add(new DrawingOperation
-                                                   {
-                                                       Location = this.currentRenderPosition,
-                                                       Map = renderData.OutlineMap
-                                                   });
+                    {
+                        Location = this.currentRenderPosition,
+                        Map = renderData.OutlineMap
+                    });
                 }
             }
 
@@ -301,10 +294,10 @@ namespace SixLabors.ImageSharp.Processing.Processors.Text
 
                 float subpixelCount = 4;
                 float offset = 0.5f;
-                if (this.Options.Antialias)
+                if (this.Options.AntiAlias)
                 {
                     offset = 0f; // we are antialising skip offsetting as real antalising should take care of offset.
-                    subpixelCount = this.Options.AntialiasSubpixelDepth;
+                    subpixelCount = this.Options.AntiAliasSubpixelDepth;
                     if (subpixelCount < 4)
                     {
                         subpixelCount = 4;
@@ -341,9 +334,7 @@ namespace SixLabors.ImageSharp.Processing.Processors.Text
                             }
 
                             for (int i = 0; i < pointsFound && i < intersectionSpan.Length; i++)
-                            {
                                 buffer[i] = intersectionSpan[i].X;
-                            }
 
                             QuickSort.Sort(buffer.Slice(0, pointsFound));
 
@@ -386,18 +377,14 @@ namespace SixLabors.ImageSharp.Processing.Processors.Text
 
                         if (scanlineDirty)
                         {
-                            if (!this.Options.Antialias)
+                            if (!this.Options.AntiAlias)
                             {
                                 for (int x = 0; x < size.Width; x++)
                                 {
                                     if (scanline[x] >= 0.5)
-                                    {
                                         scanline[x] = 1;
-                                    }
                                     else
-                                    {
                                         scanline[x] = 0;
-                                    }
                                 }
                             }
                         }

@@ -24,9 +24,10 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\thirdparty\SixLabors.Fonts\src\SixLabors.Fonts\SixLabors.Fonts.csproj" />
-    <ProjectReference Include="..\..\thirdparty\SixLabors.ImageSharp\src\ImageSharp\SixLabors.ImageSharp.csproj" />
-    <ProjectReference Include="..\..\thirdparty\SixLabors.Shapes\src\SixLabors.Shapes\SixLabors.Shapes.csproj" />
+    <ProjectReference Include="..\..\dependencies\Core\src\SixLabors.Core\SixLabors.Core.csproj" />
+    <ProjectReference Include="..\..\dependencies\Fonts\src\SixLabors.Fonts\SixLabors.Fonts.csproj" />
+    <ProjectReference Include="..\..\dependencies\ImageSharp\src\ImageSharp\SixLabors.ImageSharp.csproj" />
+    <ProjectReference Include="..\..\dependencies\Shapes\src\SixLabors.Shapes\SixLabors.Shapes.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

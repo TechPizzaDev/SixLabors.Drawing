@@ -15,13 +15,7 @@ namespace SixLabors.ImageSharp.Processing
     /// <summary>
     /// Provides an implementation of an image brush for painting images within areas.
     /// </summary>
-<<<<<<< HEAD:src/ImageSharp.Drawing/Processing/ImageBrush{TPixel}.cs
-    /// <typeparam name="TPixel">The pixel format.</typeparam>
-    public class ImageBrush<TPixel> : IBrush<TPixel>
-    where TPixel : unmanaged, IPixel<TPixel>
-=======
     public class ImageBrush : IBrush
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7:src/ImageSharp.Drawing/Processing/ImageBrush.cs
     {
         /// <summary>
         /// The image to paint.
@@ -42,7 +36,7 @@ namespace SixLabors.ImageSharp.Processing
             ImageFrame<TPixel> source,
             RectangleF region,
             GraphicsOptions options)
-            where TPixel : struct, IPixel<TPixel>
+            where TPixel : unmanaged, IPixel<TPixel>
         {
             if (this.image is Image<TPixel> specificImage)
             {
@@ -58,12 +52,10 @@ namespace SixLabors.ImageSharp.Processing
         /// The image brush applicator.
         /// </summary>
         private class ImageBrushApplicator<TPixel> : BrushApplicator<TPixel>
-            where TPixel : struct, IPixel<TPixel>
+            where TPixel : unmanaged, IPixel<TPixel>
         {
             private ImageFrame<TPixel> sourceFrame;
-
             private Image<TPixel> sourceImage;
-
             private readonly bool shouldDisposeImage;
 
             /// <summary>
@@ -147,8 +139,8 @@ namespace SixLabors.ImageSharp.Processing
                 using (IMemoryOwner<float> amountBuffer = this.Target.MemoryAllocator.Allocate<float>(scanline.Length))
                 using (IMemoryOwner<TPixel> overlay = this.Target.MemoryAllocator.Allocate<TPixel>(scanline.Length))
                 {
-                    Span<float> amountSpan = amountBuffer.AsSpan();
-                    Span<TPixel> overlaySpan = overlay.AsSpan();
+                    Span<float> amountSpan = amountBuffer.GetSpan();
+                    Span<TPixel> overlaySpan = overlay.GetSpan();
 
                     int sourceY = (y - this.offsetY) % this.yLength;
                     int offsetX = x - this.offsetX;

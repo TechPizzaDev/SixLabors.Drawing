@@ -13,12 +13,7 @@ namespace SixLabors.ImageSharp.Processing
     /// A brush is a simple class that will return an <see cref="BrushApplicator{TPixel}" /> that will perform the
     /// logic for retrieving pixel values for specific locations.
     /// </remarks>
-<<<<<<< HEAD
-    public interface IBrush<TPixel>
-        where TPixel : unmanaged, IPixel<TPixel>
-=======
     public interface IBrush
->>>>>>> 692e244f9ab4adfd57e5c7a8636fd6fc59dc86d7
     {
         /// <summary>
         /// Creates the applicator for this brush.
@@ -38,6 +33,6 @@ namespace SixLabors.ImageSharp.Processing
             ImageFrame<TPixel> source,
             RectangleF region,
             GraphicsOptions options)
-            where TPixel : struct, IPixel<TPixel>;
+            where TPixel : unmanaged, IPixel<TPixel>;
     }
 }
